@@ -1,5 +1,19 @@
 # Surge Modules
 
+## Advertising AllInOne Privacy / 合并去广告（推荐替代旧版）
+
+将本仓库 AdvertisingLite Privacy 与 blackmatrix7 AllInOne 的广告过滤整理为一个模块。沿用已有敏感域名排除，不扩大 MITM 范围；去除已识别的通用关键词误拦及功能干预，处理本次确认的重复或响应冲突，不引入 AllInOne 的远程脚本；未宣称完成全部正则表达式的语义等价证明。
+
+[合并模块 Raw](https://raw.githubusercontent.com/lswang6/surge-modules/main/Advertising-AllInOne-Privacy.sgmodule) · [审查、取舍与验证](ALLINONE-REVIEW.md)
+
+```text
+https://raw.githubusercontent.com/lswang6/surge-modules/main/Advertising-AllInOne-Privacy.sgmodule
+```
+
+用此版本时停用 **AdvertisingLite Privacy、原 AllInOne**，仅启用合并版；原 AdvertisingLite 和 AdvertisingLite MITM (2) 也不要同时启用。**WeChat Ads Privacy 继续独立保留**，Sukka 分流引用不变。不要将“合并”理解为收录所有上游功能：知乎功能脚本、地区跳转和新增解密域名不在本版本范围内。
+
+这是经过审查的固定快照，不会自动合并上游 master。MITM 仍需自行配置并信任 CA；部分共享主机仍需解密，不能保证所有 App 去广告或零误拦。旧 Raw 文件保留以便回退。GPL-2.0-only，见 [LICENSE](LICENSE)。
+
 ## Sukka Reject Balanced / 通用去广告（兼容优化）
 
 基于 Sukka Reject Base 的审核快照：2026-09-30 从 134,574 条中移除 9 条有正常业务用途或匹配范围过宽的条目，保留 **134,565 条**广告、追踪等域名规则。免 MITM、无脚本；并未逐个验证全部域名，不保证零误拦。
@@ -92,6 +106,7 @@ Surge 官方文档：[模块](https://manual.nssurge.com/profile/module.html) ·
 | 文件 | 许可 |
 | --- | --- |
 | `AdvertisingLite-Privacy.sgmodule` | GPL-2.0，见 `LICENSE` |
+| `Advertising-AllInOne-Privacy.sgmodule`、`sources/allinone.sgmodule`、`advertising-allinone-review.json`、`build_advertising_allinone.py`、`test_advertising_allinone.py`、`ALLINONE-REVIEW.md` | GPL-2.0-only，见 `LICENSE` |
 | `WeChat-Ads-Privacy.sgmodule` | GPL-3.0-only，见 `LICENSE-GPL-3.0` |
 | `Sukka-Reject-Balanced.domainset`、`Sukka-Reject-Balanced.list`、`Sukka-Reject-Balanced.sgmodule`、`sources/sukka-reject.conf`、`sukka-review.json`、`build_sukka.py`、`test_sukka.py`、`SUKKA-REVIEW.md` | AGPL-3.0-only，见 `LICENSE-AGPL-3.0` |
 
