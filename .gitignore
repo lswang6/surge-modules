@@ -1,0 +1,6 @@
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
+# Local tooling only
+.ignore
+__pycache__/
