@@ -1,5 +1,15 @@
 # Surge Modules
 
+## Sukka Reject Balanced / 通用去广告（兼容优化）
+
+基于 Sukka Reject Base 的审核快照：2026-09-30 从 134,574 条中移除 9 条有正常业务用途或匹配范围过宽的条目，保留 **134,565 条**广告、追踪等域名规则。免 MITM、无脚本；并未逐个验证全部域名，不保证零误拦。
+
+[审查、排除原因和安装说明](SUKKA-REVIEW.md) · [模块 Raw](https://raw.githubusercontent.com/lswang6/surge-modules/main/Sukka-Reject-Balanced.sgmodule) · [原生 DOMAIN-SET Raw](https://raw.githubusercontent.com/lswang6/surge-modules/main/Sukka-Reject-Balanced.domainset) · [常规 RULE-SET `.list` Raw](https://raw.githubusercontent.com/lswang6/surge-modules/main/Sukka-Reject-Balanced.list)
+
+三种形式任选一种。已有 Sukka `DOMAIN-SET` 的配置，**优先替换原地址并保留策略与顺序**。模块规则会置于主配置规则前面，固定使用 `REJECT`，不受已有广告策略组开关控制。不要叠加旧版；另有 `reject-drop` 等列表时，相同域名可能仍被它们拦截，详见审查说明。
+
+本派生版、原始快照和转换源码按 **AGPL-3.0-only** 发布，见 [LICENSE-AGPL-3.0](LICENSE-AGPL-3.0) 和下方文件级许可范围。更新采用人工审查快照，客户端刷新 Raw 不等于自动合并上游。
+
 ## WeChat Ads Privacy / 微信去广告（免解密）
 
 小程序广告拦截补充模块，使用 **13 条精确 DOMAIN 规则**，无需 MITM、脚本、远程 RULE-SET 或 DNS 修改。可与下面的 AdvertisingLite Privacy 一起使用。
@@ -74,3 +84,15 @@ https://raw.githubusercontent.com/lswang6/surge-modules/main/AdvertisingLite-Pri
 本派生模块按上游 **GNU GPL version 2** 发布，完整条款见 [LICENSE](LICENSE)。上游项目与 Surge 官方不为本次修改背书。
 
 Surge 官方文档：[模块](https://manual.nssurge.com/profile/module.html) · [MITM 与负向匹配](https://manual.nssurge.com/http/mitm.html)。
+
+## 文件级许可范围
+
+本仓库包含独立来源的作品，根目录 `LICENSE` 不覆盖所有文件：
+
+| 文件 | 许可 |
+| --- | --- |
+| `AdvertisingLite-Privacy.sgmodule` | GPL-2.0，见 `LICENSE` |
+| `WeChat-Ads-Privacy.sgmodule` | GPL-3.0-only，见 `LICENSE-GPL-3.0` |
+| `Sukka-Reject-Balanced.domainset`、`Sukka-Reject-Balanced.list`、`Sukka-Reject-Balanced.sgmodule`、`sources/sukka-reject.conf`、`sukka-review.json`、`build_sukka.py`、`test_sukka.py`、`SUKKA-REVIEW.md` | AGPL-3.0-only，见 `LICENSE-AGPL-3.0` |
+
+Sukka 原始规则 © Sukka 与贡献者；本次修改由 lswang6 于 2026-09-30 完成。各模块的来源说明、署名与许可分别保留。

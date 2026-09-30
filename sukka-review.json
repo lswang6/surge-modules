@@ -1,0 +1,76 @@
+{
+  "source_url": "https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/393edcad7e2f021383a82242a9614fd4a7aeb917/List/domainset/reject.conf",
+  "source_sha256": "f699906c1c1e0db1614cb4ba29d515002dd5de12cf764f4675a1744533265928",
+  "source_updated": "2026-09-30T11:11:16.839Z",
+  "reviewed_on": "2026-09-30",
+  "removals": [
+    {
+      "entry": ".taio.app",
+      "reason": "Taio 文本编辑器官网、文档与动作目录共用该后缀，整域封锁超出广告过滤范围。未测试应用内功能。",
+      "sources": [
+        "https://taio.app/"
+      ]
+    },
+    {
+      "entry": ".mob.com",
+      "reason": "覆盖官方文档中的短信验证码校验 API webapi.sms.mob.com 和开发服务；这是共享业务范围取舍，也可能恢复该厂商部分统计流量。该 API 文档较旧，未实测登录。",
+      "sources": [
+        "https://www.mob.com/about/news/360",
+        "https://www.mob.com/mobService/sms"
+      ]
+    },
+    {
+      "entry": ".jpush.cn",
+      "reason": "覆盖极光官方推送发送及设备管理 API api.jpush.cn、device.jpush.cn；不代表已恢复全部客户端推送，原 reject-drop 仍可能拦截。",
+      "sources": [
+        "https://docs.jiguang.cn/jpush/server/push/server_overview"
+      ]
+    },
+    {
+      "entry": ".jiguang.cn",
+      "reason": "覆盖极光官方开发文档与服务网站；混合服务父域不作一刀切广告拦截，也可能允许部分分析营销流量。",
+      "sources": [
+        "https://docs.jiguang.cn/jpush/server/push/server_overview"
+      ]
+    },
+    {
+      "entry": ".getui.com",
+      "reason": "覆盖官方推送 REST API restapi.getui.com、文档与开发服务；不代表已恢复全部客户端推送，原 reject-drop 仍可能拦截。",
+      "sources": [
+        "https://docs.getui.com/getui/server/rest_v2/standard/",
+        "https://docs.getui.com/getui/server/rest_v2/push/"
+      ]
+    },
+    {
+      "entry": ".plus.com",
+      "reason": "Plusnet 官方文档将该后缀用于多个客户网站托管，整个后缀并非单一广告服务；当前服务迁移中，未测试具体客户网站。",
+      "sources": [
+        "https://www.plus.net/help/broadband/about-your-plusnet-webspace/"
+      ]
+    },
+    {
+      "entry": ".log.aliyuncs.com",
+      "reason": "覆盖阿里云 SLS 多租户管理、写入及查询 API；为业务 API 兼容性排除，也可能允许利用该服务上传的统计日志。",
+      "sources": [
+        "https://help.aliyun.com/en/sls/developer-reference/api-sls-2020-12-30-endpoint",
+        "https://help.aliyun.com/en/sls/developer-reference/get-started-with-log-service-sdk-for-go"
+      ]
+    },
+    {
+      "entry": ".api.statsigcdn.com",
+      "reason": "官方文档指定该主机下载功能开关配置，不只是事件上报；保留独立事件收集域名的拦截，未测试具体 App。",
+      "sources": [
+        "https://docs.statsig.com/client/javascript-mono/UsingSpecsDataAdapter",
+        "https://docs.statsig.com/infrastructure/statsig_domains"
+      ]
+    },
+    {
+      "entry": ".data",
+      "reason": "IANA 确认是已委派顶级域，后缀规则会封锁整个命名空间；本版不采用整个顶级域的封禁，属于范围取舍而非已复现故障。原 non_ip/reject.conf 仍有同类规则。",
+      "sources": [
+        "https://www.iana.org/domains/root/db/data.html",
+        "https://manual.nssurge.com/rules/domain.html"
+      ]
+    }
+  ]
+}

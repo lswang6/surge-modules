@@ -1,0 +1,20 @@
+#!name=Sukka Reject Balanced
+#!desc=基于 Sukka 约13.4万条广告与追踪规则的兼容性调整快照，排除部分正常服务；免MITM、无脚本，不保证零误拦。来源、排除项及局限见仓库 README 与 SUKKA-REVIEW.md。
+#!author=Sukka and contributors; modified by lswang6
+#!homepage=https://github.com/lswang6/surge-modules
+
+# Sukka Reject Balanced
+# Surge © Sukka; maintained with contributors
+# Source: https://raw.githubusercontent.com/SukkaLab/ruleset.skk.moe/393edcad7e2f021383a82242a9614fd4a7aeb917/List/domainset/reject.conf
+# Source updated: 2026-09-30T11:11:16.839Z
+# Source snapshot SHA-256: f699906c1c1e0db1614cb4ba29d515002dd5de12cf764f4675a1744533265928
+# Unmodified source and upstream attribution: sources/sukka-reject.conf
+# SPDX-License-Identifier: AGPL-3.0-only
+# Upstream revision: 38ac44a1ae08ae3038c523beaec0d7390af4dc6b
+# License: LICENSE-AGPL-3.0; third-party attribution: SUKKA-REVIEW.md
+# Modified by lswang6, 2026-09-30: 9 reviewed compatibility exclusions
+# Entries: 134565
+# Review and limitations: SUKKA-REVIEW.md
+
+[Rule]
+DOMAIN-SET,https://raw.githubusercontent.com/lswang6/surge-modules/main/Sukka-Reject-Balanced.domainset,REJECT,extended-matching
