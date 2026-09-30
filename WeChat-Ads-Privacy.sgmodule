@@ -1,14 +1,16 @@
 #!name=WeChat Ads Privacy
-#!desc=微信小程序广告拦截（免解密）：10 个精确广告域名，覆盖微信广告资源及收钱吧、猫眼、捷停车、丰巢、闪送、小兔充充、小电充电。无需 MITM，无脚本；不保证去除公众号、朋友圈、视频号广告，激励广告奖励可能不可用。
-#!author=lswang6; domain-rule references: 可莉, fmz200
+#!desc=微信小程序及停车扫码广告拦截：13 条精确域名规则，覆盖微信广告资源、捷停车、P云、收钱吧、猫眼、丰巢、闪送、小电、U净和朵朵。免 MITM、无脚本；不保证过滤 ETCP 或全部微信广告，激励广告奖励可能不可用。
+#!author=lswang6; domain-rule references: 可莉, fmz200, zirawell, AWAvenue-Ads-Rule Contributor
 #!homepage=https://github.com/lswang6/surge-modules
 
 # SPDX-License-Identifier: GPL-3.0-only
 # Source: https://github.com/fmz200/wool_scripts/blob/3ca7487b4e4b86d9af76e50df72c62eacfbb659e/Loon/plugin/WeChatMiniAds.plugin
 # Upstream author: 可莉; original contributors credited in the source plugin.
-# Modified by lswang6, 2026-09-30: retain six DOMAIN rules; convert four
-# advertising-host rewrites to exact DOMAIN blocks. No MITM or scripts.
-# See README.md for scope, compatibility and verification limits.
+# Modified by lswang6, 2026-09-30: keep nine existing exact DOMAIN rules,
+# add four, remove ad.xiaotucc.com (only /advert path evidence).
+# Additional sources: zirawell/R-Store and TG-Twilight/AWAvenue-Ads-Rule.
+# See WECHAT-SOURCES.md for fixed snapshots, licenses and conversion limits.
+# No MITM, scripts, remote rule sets or DNS changes.
 
 [Rule]
 # WeChat mini-program advertising resources
@@ -20,10 +22,17 @@ DOMAIN,wxsnsdythumb.wxs.qq.com,REJECT
 DOMAIN,ads-shopping.shouqianba.com,REJECT
 DOMAIN,ad.maoyan.com,REJECT
 
-# JParking / Hive Box / iShansong / Xiaotu Charging / Xiaodian Charging
+# JParking / Hive Box / iShansong / Xiaodian Charging
 # Only these named hosts are blocked, not their parent domains or business APIs.
+# e.jparking.cn is not proven advertising-only; payment flow remains untested.
 DOMAIN,e.jparking.cn,REJECT
 DOMAIN,dsp.fcbox.com,REJECT
 DOMAIN,ads.ishansong.com,REJECT
-DOMAIN,ad.xiaotucc.com,REJECT
 DOMAIN,smarket.dian.so,REJECT
+
+# Reviewed additions from AWAvenue: UJing / 4pyun / Duoduo
+DOMAIN,ads.zhinengxiyifang.cn,REJECT
+DOMAIN,ad-api.4pyun.com,REJECT
+DOMAIN,ad-files.4pyun.com,REJECT
+# Upstream host-suffix narrowed to this exact host; subdomains are not blocked.
+DOMAIN,ad.duoduo.link,REJECT
