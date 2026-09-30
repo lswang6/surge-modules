@@ -1,5 +1,41 @@
 # Surge Modules
 
+## WeChat Ads Privacy / 微信去广告（免解密）
+
+小程序广告拦截补充模块，使用 10 条精确域名规则，无需 MITM 或远程脚本。可与下面的 AdvertisingLite Privacy 一起使用。
+
+[查看模块](WeChat-Ads-Privacy.sgmodule) · [Raw 下载](https://raw.githubusercontent.com/lswang6/surge-modules/main/WeChat-Ads-Privacy.sgmodule)
+
+在 Surge「模块 → 从 URL 安装」粘贴：
+
+```text
+https://raw.githubusercontent.com/lswang6/surge-modules/main/WeChat-Ads-Privacy.sgmodule
+```
+
+- 拦截 `wxsnsdy.wxs.qq.com`、`wxsmsdy.video.qq.com`、`wxsnsdythumb.wxs.qq.com` 三个小程序广告资源域名。
+- 拦截 `ads-shopping.shouqianba.com`、`ad.maoyan.com` 两个广告域名。这两项也会影响同域名的独立 App 广告。
+- 补充捷停车 `e.jparking.cn`、丰巢 `dsp.fcbox.com`、闪送 `ads.ishansong.com`、小兔充充 `ad.xiaotucc.com`、小电充电 `smarket.dian.so`。规则同样作用于独立 App 对这些主机的请求。
+- 不拦截整个 `wxs.qq.com`、`qq.com`、`qpic.cn` 或 `servicewechat.com`；不添加公众号、聊天、支付、登录或银行接口的 MITM。现有代理、DNS 和证书设置不变。
+
+**边界：**这是按域名过滤，无法区分同一域名内的广告与其他内容，也不能保证屏蔽公众号、朋友圈或视频号广告。小程序“看广告领奖励”可能无法使用；如出现内容加载异常，停用本模块对照。模块不清理已缓存广告，不自动同步上游。它不改变其他模块的解密行为；与 AdvertisingLite Privacy 配合时，继续保留 `-mp.weixin.qq.com` 排除。
+
+### 审查结论与参考（2026-09-30）
+
+| 来源 | 做法 | 本次取舍 |
+| --- | --- | --- |
+| [whatshub 迁移后的模块](https://yfamilys.com/module/wechatad.module) / [GitHub 同名模块](https://github.com/deezertidal/shadowrocket-rules/blob/main/modules/wechatad.module) | 对 `mp.weixin.qq.com/mp/getappmsgad` 调用 [NobyDa Wechat.js](https://github.com/NobyDa/Script/blob/0b8d083d444f4476700cb9d5d059c07b42da85eb/QuantumultX/File/Wechat.js)，清空广告字段 | 需要解密整个公众号主机，与既有排除冲突；未采用。原站返回迁移通知，核对的是新站内容及 GitHub 副本。 |
+| [fmz200 微信小程序规则](https://github.com/fmz200/wool_scripts/blob/3ca7487b4e4b86d9af76e50df72c62eacfbb659e/Loon/plugin/WeChatMiniAds.plugin) | 精确广告域名，以及大量小程序接口重写和脚本 | 采用 6 条 DOMAIN 规则，并将丰巢、闪送、小兔充充和小电的 4 条广告主机重写改为精确域名拦截。域名用途判断来自上游规则，并非对服务器全部接口的验证；不加入银行、乘车码、登录、订单等共用业务接口。 |
+| [fmz200 公众号模块](https://github.com/fmz200/wool_scripts/blob/3ca7487b4e4b86d9af76e50df72c62eacfbb659e/Surge/module/split/partW/WeChatOfficialAccount.sgmodule) / [QingRex 公众号模块](https://github.com/QingRex/LoonKissSurge/blob/913ec005f544221e6c56a7d0ecec81c4b3b914bb/Surge/微信公众号去广告.sgmodule) | 响应修改或按路径返回空 JSON；后者还拦截整个 `wxs.qq.com` | 同样需要公众号 MITM；未采用整站拦截，也未删除相关文章、搜索等非纯广告功能。 |
+| [ddgksf2013 微信规则](https://github.com/ddgksf2013/Rewrite/blob/dc3ea2c1fb2db870676b26da24006083eb1d44d3/AdBlock/WeChat.conf) | 同一个 `getappmsgad` 接口的响应替换 | 作者已标注“已失效”，且不包含公众号信息流、朋友圈广告。未将这些旧规则计作有效覆盖。 |
+
+Surge 的 MITM 按主机启用，脚本只匹配一个广告路径，并不代表只解密该路径。负向名单优先命中时，公众号广告脚本也无法处理对应 HTTPS 响应。见 [Surge MITM 文档](https://manual.nssurge.com/http/mitm.html)。
+
+检查时，当前 Mac 配置把上述三个微信广告域名放行到 DIRECT；收钱吧、猫眼、捷停车和丰巢已被其他规则拦截。本模块的规则会插入主配置规则顶部，让这些广告拦截优先于宽泛的微信直连规则。已有同类精确 REJECT 规则时不必重复安装。
+
+验证：`python3 test_wechat_module.py` 检查精确拦截和免解密边界；另以 Surge CLI 检查含这些规则的测试配置。没有实际登录微信逐个测试广告位、聊天、支付、小游戏奖励或 iOS，规则来源不等于效果保证。
+
+来源为 fmz200/wool_scripts 的上述固定快照，原插件署名可莉及其贡献者。lswang6 于 2026-09-30 整理为十条 Surge 域名规则；本模块按 **GPL-3.0-only** 发布，见 [LICENSE-GPL-3.0](LICENSE-GPL-3.0)。下方 AdvertisingLite Privacy 仍使用其原有 GPL-2.0 许可。
+
 ## AdvertisingLite Privacy
 
 Privacy-focused ad filtering for Surge, derived from blackmatrix7's AdvertisingLite.
