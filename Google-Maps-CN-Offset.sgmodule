@@ -9,9 +9,9 @@
 
 [URL Rewrite]
 # URL already has a query string -> append &gl=cn (skipped if gl=cn already present, so no redirect loop)
-^(https://www\.google\.com(?:\.hk)?/maps[^?]*\?(?!(?:[^#]*&)?gl=cn(?:&|$)))(.*)$ $1$2&gl=cn 302
+^(https://www\.google\.com(?:\.hk)?/maps(?:/[^?]*)?\?(?!(?:[^#]*&)?gl=cn(?:&|$)))(.*)$ $1$2&gl=cn 302
 # URL has no query string -> add ?gl=cn
-^(https://www\.google\.com(?:\.hk)?/maps[^?]*)$ $1?gl=cn 302
+^(https://www\.google\.com(?:\.hk)?/maps(?:/[^?]*)?)$ $1?gl=cn 302
 
 [MITM]
 hostname = %APPEND% www.google.com, www.google.com.hk

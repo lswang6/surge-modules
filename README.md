@@ -24,6 +24,20 @@ https://raw.githubusercontent.com/lswang6/surge-modules/main/Advertising-AllInOn
 
 本派生版、原始快照和转换源码按 **AGPL-3.0-only** 发布，见 [LICENSE-AGPL-3.0](LICENSE-AGPL-3.0) 和下方文件级许可范围。更新采用人工审查快照，客户端刷新 Raw 不等于自动合并上游。
 
+## Google Maps CN Offset / Google 地图中国偏移修正
+
+在中国境内用浏览器打开 Google 地图时卫星图与路网错位；网页地址加上 `gl=cn` 即恢复正常。本模块用 **2 条 URL Rewrite（302）** 自动补上该参数，不改动 `data=` 段，已带参数的地址不再跳转。无脚本、无规则集。
+
+[查看模块](Google-Maps-CN-Offset.sgmodule) · [Raw 下载](https://raw.githubusercontent.com/lswang6/surge-modules/main/Google-Maps-CN-Offset.sgmodule)
+
+在 Surge「模块 → 从 URL 安装」粘贴：
+
+```text
+https://raw.githubusercontent.com/lswang6/surge-modules/main/Google-Maps-CN-Offset.sgmodule
+```
+
+**边界：**HTTPS 地址重写必须解密主机，因此会把 `www.google.com`、`www.google.com.hk` 加入 MITM，需已安装并信任 Surge CA。仅对 Safari/Chrome 等浏览器内的 `/maps` 路径生效；Google Maps App 使用自有加密接口，无法通过此模块修正。偏移是否消失依赖 Google 对 `gl=cn` 的处理，未在 iOS 设备实测。验证：`python3 test_google_maps_module.py`。按 **GPL-2.0-only** 发布，见 [LICENSE](LICENSE)。
+
 ## WeChat Ads Privacy / 微信去广告（免解密）
 
 小程序广告拦截补充模块，使用 **13 条精确 DOMAIN 规则**，无需 MITM、脚本、远程 RULE-SET 或 DNS 修改。可与下面的 AdvertisingLite Privacy 一起使用。
@@ -106,6 +120,7 @@ Surge 官方文档：[模块](https://manual.nssurge.com/profile/module.html) ·
 | 文件 | 许可 |
 | --- | --- |
 | `AdvertisingLite-Privacy.sgmodule` | GPL-2.0，见 `LICENSE` |
+| `Google-Maps-CN-Offset.sgmodule`、`test_google_maps_module.py` | GPL-2.0-only，见 `LICENSE` |
 | `Advertising-AllInOne-Privacy.sgmodule`、`sources/allinone.sgmodule`、`advertising-allinone-review.json`、`build_advertising_allinone.py`、`test_advertising_allinone.py`、`ALLINONE-REVIEW.md` | GPL-2.0-only，见 `LICENSE` |
 | `WeChat-Ads-Privacy.sgmodule` | GPL-3.0-only，见 `LICENSE-GPL-3.0` |
 | `Sukka-Reject-Balanced.domainset`、`Sukka-Reject-Balanced.list`、`Sukka-Reject-Balanced.sgmodule`、`sources/sukka-reject.conf`、`sukka-review.json`、`build_sukka.py`、`test_sukka.py`、`SUKKA-REVIEW.md` | AGPL-3.0-only，见 `LICENSE-AGPL-3.0` |
