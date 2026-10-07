@@ -1,0 +1,17 @@
+#!name=Google Maps CN Offset
+#!desc=Google 地图网页版在中国境内卫星图与路网错位时，302 跳转为带 gl=cn 的地址以修正偏移。仅对 Safari/Chrome 等浏览器内的 www.google.com(.hk)/maps 生效，不影响 Google Maps App。需开启 MITM 并信任 Surge CA。
+#!author=lswang6
+#!homepage=https://github.com/lswang6/surge-modules
+
+# SPDX-License-Identifier: GPL-2.0-only
+# Two URL rewrites only; no scripts, no rule sets, no DNS changes.
+# HTTPS URL rewrite needs the hostname decrypted, hence the MITM append.
+
+[URL Rewrite]
+# URL already has a query string -> append &gl=cn (skipped if gl=cn already present, so no redirect loop)
+^(https://www\.google\.com(?:\.hk)?/maps[^?]*\?(?!(?:[^#]*&)?gl=cn(?:&|$)))(.*)$ $1$2&gl=cn 302
+# URL has no query string -> add ?gl=cn
+^(https://www\.google\.com(?:\.hk)?/maps[^?]*)$ $1?gl=cn 302
+
+[MITM]
+hostname = %APPEND% www.google.com, www.google.com.hk
